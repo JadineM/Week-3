@@ -1,0 +1,130 @@
+<!DOCTYPE html> 
+<html> 
+
+<head>
+    <title>Displaying a CSV file as a table</title>
+
+    <h1>
+        <center>DISPLAYING OF LEARNERS MARKS IN A TABLE</center>
+    </h1>
+
+    <h3 style="color:grey;">
+        <center>Please select your input.csv file and thereafter click on 'Load student marks'</center>
+    </h3>
+
+
+    <style type="text/css">
+
+
+        .button 
+        {
+            background-color: lightpink;
+        }
+    
+
+        body
+        {
+            
+            background-image: url(background_image.jpg);
+            background-size: contain;
+            background-repeat: repeat;
+            height: 1000px;
+            font-family: Calibri;
+            font-size: 15pt;
+        }
+
+
+        td
+        {
+            background-color: skyblue;
+            border-radius: 1px solid black;
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            
+        }
+
+
+        td:nth-last-child(1) 
+        {
+            border-right: 1px solid black;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+
+
+    </style>
+</head>
+
+
+<body>
+    
+    <center>
+
+
+            <script type="text/javascript">
+
+                function upload_file() 
+                {
+                    var csv_file = document.getElementById("chosen_file");
+                    
+                        
+                            var read_csv = new FileReader();
+                            read_csv.onload = function(e) 
+                            {
+                                var marks_table = document.createElement("table");
+
+                                var rows = e.target.result.split("\n");
+                                var num_of_rows = rows.length;
+
+                                for (var r = 0; r < num_of_rows; r++) 
+                                {
+                                    var cells = rows[r].split(",");
+
+                                    if (cells.length > 1) 
+                                    {
+                                        var table_row = marks_table.insertRow(-1);
+                                        var num_of_cells = cells.length;
+
+                                        for (var c = 0; c < num_of_cells; c++) 
+                                        {
+                                            var table_cell = table_row.insertCell(-1);
+                                            table_cell.innerHTML = cells[c];
+                                        }
+                                    }
+                                }
+
+                                var csv_div = document.getElementById("div_csv_file");
+                                csv_div.innerHTML = "Table showing the final marks of learners";
+                                csv_div.appendChild(marks_table);
+                            }
+
+                            read_csv.readAsText(csv_file.files[0]);
+
+                }
+
+            </script>
+
+
+            <hr/>
+
+            <input type="file" id="chosen_file" />
+
+            <input type="button" class="button" id="generate_table" value="Load student marks" onclick="upload_file()"/>
+           
+
+            <hr/>
+
+            
+            <div id="div_csv_file"> </div>
+
+
+    </center>
+
+</body>
+
+
+
+</html>
